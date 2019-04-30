@@ -3,12 +3,10 @@ const url = require("./route");
 // const route = require("../../../src/controller/index");
 const Template = require("./io/template").Template;
 const StaticCache = require("./io/static_cache").StaticCache;
-const RedisPool = require("koa-2-ioredis");
 const Crypt = require("./io/crypt").Crypt;
 const numCPUs = require('os').cpus().length;
 const rediss = require("redis");
 const cluster = require("cluster");
-
 const contrnoller = require("./controller");
 const error = require("./errors");
 const midware = require("./midware");
@@ -17,11 +15,11 @@ const midware = require("./midware");
 class Server {
     constructor(Route) {
         this.url = url;
-        this.redi = rediss.createClient();
+        this.redi =null;
         this.IsInits = [];
-        this.redi = rediss.createClient();
         this.Koa = new koa();
-        this.isredis = true;
+        this.isredis = false;
+        this.RedisPool = ()=>{};
     }
 
     noredis() {
@@ -29,7 +27,10 @@ class Server {
     }
 
     redis() {
+        this.RedisPool = require("koa-2-ioredis");
+
         if (this.IsInits.length === 0) {
+            this.redi =  rediss.createClient();;
             let Staticcache = new StaticCache();
             Staticcache.cacheAll(this.redi);
             this.IsInits.push(0);
@@ -50,7 +51,10 @@ class Server {
                 console.log('worker' + worker.id + 'died');
             });
         } else {
-            this.Koa.use(RedisPool());
+            if(this.isredis===true){
+                this.Koa.use(this.RedisPool());
+                console.log(1);
+            }
             this.Koa.use(async (ctx, next) => {
                 let l = ctx.url.toString().length - (ctx.querystring === "" ? 0 : `?${ctx.querystring}`.length);
                 let trueUrl = "";
@@ -79,6 +83,7 @@ class Server {
                                     let ht = val.callback.view();
                                     if (this.isredis) {
                                         const doc = await ctx.redis.get(val.callback.tem());
+                                        
                                         const temp = Template.test(JSON.parse(doc).data, val.callback.args());
                                         ctx.body = temp;
                                     } else {

@@ -1,6 +1,6 @@
 {
   "name": "oreoframe",
-  "version": "0.0.9",
+  "version": "0.0.7",
   "description": "node web mvc frame",
   "main": "index.js",
   "scripts": {
