@@ -1,0 +1,23 @@
+{
+  "name": "oreoframe",
+  "version": "1.0.0",
+  "description": "node web mvc frame",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js --noredis"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "tungyao",
+  "license": "MIT",
+  "dependencies": {
+    "koa2": "^2.0.0-alpha.7",
+    "redis": "^2.8.0",
+    "ioredis": "^4.9.0",
+    "koa-2-ioredis": "^1.1.1"
+  }
+}
