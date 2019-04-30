@@ -2,12 +2,12 @@
 I recommend using the following directory structure <br>
 ***
 |dir<br>
-|¡ª¡ªsrc<br>
-|¡ª¡ª©¸©¤controller<br>
-|¡ª¡ª¡ª¡ª©¸©¤route.js<br>
-|¡ª¡ªapp.js<br>
-|¡ª¡ªconfig<br>
-|¡ª¡ª©¸©¤default.json<br>
+|--src<br>
+|----controller<br>
+|------route.js<br>
+|--app.js<br>
+|--config<br>
+|----default.json<br>
 ***
 
 ## app.js
